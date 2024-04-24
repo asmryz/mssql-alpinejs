@@ -2,7 +2,7 @@ import sql from 'mssql'
 
 const config = {
     user: 'sa',
-    password: 'Welcome@123',
+    password: 'Welcome@494',
     server: 'localhost', // You can use 'localhost\\instance' to connect to named instance
     database: 'Silberschatz',
     synchronize: true,

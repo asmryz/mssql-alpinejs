@@ -9,40 +9,64 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="" src="app.js"></script>
     <style>
-        table, th, tr, td{
+        table,
+        th,
+        tr,
+        td {
             border-collapse: collapse;
             border: 1px solid #808080;
+        }
+        td{
+            margin-left: 5px;
+            margin-right: 5px;
         }
     </style>
     <title>Document</title>
 </head>
 
 <body x-data="dataD()" x-init="getCourses()" class="p-10">
-
-    <div class="mt-16 xxl:mt-0 xxl:ml-auto">
-        <h4 class="font-bold text-lg">Courses</h4>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Dept.</th>
-                <th>Cr.</th>
-            </tr>
-            <template x-for="course in courses">
+    <div style="display: flex;">
+        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto" x-show="page <= 2">
+            <h4 class="font-bold text-lg">Courses</h4>
+            <table>
                 <tr>
-                    <td x-text="course.course_id"></td>
-                    <td>
-                        <a href="#" x-text="course.title" 
-                            class="underline text-blue-500"
-                            @click="getDepartment(`${course.dept_name}`)" 
-                        ></a>
-                    </td>
-                    <td x-text="course.dept_name"></td>
-                    <td x-text="course.credits"></td>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Dept.</th>
+                    <th>Cr.</th>
                 </tr>
-            </template>
-            
-        </table>
+                <template x-for="course in courses">
+                    <tr>
+                        <td class="px-3" x-text="course.course_id"></td>
+                        <td class="px-3">
+                            <a href="#" x-text="course.title" class="underline text-blue-500"
+                                @click="getDepartment(`${course.dept_name}`)"></a>
+                        </td>
+                        <td class="px-3" x-text="course.dept_name"></td>
+                        <td class="px-3" x-text="course.credits"></td>
+                    </tr>
+                </template>
+
+            </table>
+        </div>
+        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto" x-show="Object.keys(dept).length !== 0">
+            <h4 class="font-bold text-lg">Department</h4>
+            <table>
+                <tr>
+                    <th class="px-3 text-right">Name : </th>
+                    <td class="px-3" x-text="dept.dept_name"></td>
+                </tr>
+                <tr>
+                    <th class="px-3 text-right">Building : </th>
+                    <td class="px-3" x-text="dept.building"></td>
+                </tr>
+                <tr>
+                    <th class="px-3 text-right">Budget : </th>
+                    <td class="px-3" x-text="dept.budget"></td>
+                </tr>
+            </table>
+        </pre>
+        </div>
     </div>
 </body>
 
@@ -57,4 +81,4 @@
     "credits": 4
 }
 
---> 
+-->
