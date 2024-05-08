@@ -43,8 +43,33 @@ router.get('/api/courses/:id', (req, res) => {
     } catch (err) { res.status(500).send(err.message) }
 })
 
-router.post('/api/courses/save', (req, res) => {
+router.post('/api/courses/save', async (req, res) => {
     console.log(req.body)
+    try {
+
+        connection.then(async db => {
+            const result = await  db.request()
+            .input(`course_id`, sql.VarChar, req.body.course_id)
+            .input(`title`, sql.VarChar, req.body.title)
+            .input(`dept_name`, sql.VarChar, req.body.dept_name)
+            .input(`credits`, sql.Numeric, req.body.credits)
+            .query(`UPDATE course SET title = @title, dept_name = @dept_name, credits = @credits WHERE course_id = @course_id;
+                    SELECT * FROM course`);
+            console.log(result);
+            if(result.rowsAffected[0] === 1){
+                res.status(200).json(result.recordset);
+            }
+
+        })
+
+        // const request = new sql.Request()
+        // request.query('update myAwesomeTable set awesomness = 100', (err, result) => {
+        //     console.log(result.rowsAffected)
+        // })        
+        
+    } catch (error) {
+        console.log(error.message)
+    }
 })
 
 router.get('/col', (req, res) => {

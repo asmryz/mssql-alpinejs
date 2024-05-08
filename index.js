@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000
 
 express()
     .use(express.static(path.join(__dirname, 'public')))
+    .use(express.json())
     .engine("html", ejs.renderFile)
     .set('views', 'views')
     .set('view engine', 'html')
