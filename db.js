@@ -1,12 +1,28 @@
 import sql from 'mssql'
 
 const config = {
-    user: 'sa',
-    password: 'Welcome@123',
-    server: 'localhost', // You can use 'localhost\\instance' to connect to named instance
-    database: 'Silberschatz',
-    synchronize: true,
+    user: 'asim',
+    password: 'welcome123',
+    server: '10.0.132.28', // You can use 'localhost\\instance' to connect to named instance
+    database: 'check',
+    encrypt: false,
     trustServerCertificate: true,
+}
+
+const sqlConfig = {
+    user: 'asim',
+    password: 'welcome123',
+    database: 'check',
+    server: '10.0.132.28',
+    /* pool: {
+       max: 10,
+       min: 0,
+       idleTimeoutMillis: 30000
+     },*/
+    options: {
+        encrypt: false,
+        trustServerCertificate: true,
+    }
 }
 
 

@@ -15,9 +15,14 @@
             border-collapse: collapse;
             border: 1px solid #808080;
         }
-        td{
+
+        td {
             margin-left: 5px;
             margin-right: 5px;
+        }
+
+        .line {
+            border: 1px solid #d3d3d3;
         }
     </style>
     <title>Document</title>
@@ -25,7 +30,7 @@
 
 <body x-data="App()" x-init="getCourses()" class="p-10">
     <div style="display: flex;">
-        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto" x-show="page <= 2">
+        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto line" x-show="page <= 2">
             <h4 class="font-bold text-lg">Courses</h4>
             <table>
                 <tr>
@@ -37,18 +42,20 @@
                 <template x-for="course in courses">
                     <tr>
                         <td class="px-3" x-text="course.course_id"></td>
-                        <td class="px-3" x-text="course.title"></td>
-                        <td class="px-3" >
+                        <td class="px-3">
+                            <a href="#" x-text="course.title" class="underline text-orange-500"
+                                @click="Edit(`${course.course_id}`)"></a>
+                        </td>
+                        <td class="px-3">
                             <a href="#" x-text="course.dept_name" class="underline text-blue-500"
-                            @click="getDepartment(`${course.dept_name}`)"></a>                           
+                                @click="getDepartment(`${course.dept_name}`)"></a>
                         </td>
                         <td class="px-3" x-text="course.credits"></td>
                     </tr>
                 </template>
-
             </table>
         </div>
-        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto" x-show="Object.keys(dept).length !== 0">
+        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto line" x-show="Object.keys(dept).length !== 0">
             <h4 class="font-bold text-lg">Department</h4>
             <table>
                 <tr>
@@ -64,7 +71,51 @@
                     <td class="px-3" x-text="dept.budget"></td>
                 </tr>
             </table>
-        </pre>
+            <pre x-text="JSON.stringify(dept)"></pre>
+        </div>
+        <div class="ml-8 mt-16 xxl:mt-0 xxl:ml-auto line" x-show="page === 3">
+            <h4 class="font-bold text-lg">Edit</h4>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Course Id : </th>
+                        <td x-text="crs.course_id"></td>
+                    </tr>
+                    <tr>
+                        <th>Title : </th>
+                        <td>
+                            <input type="text" x-model="crs.title" size="30">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Dept : </th>
+                        <td>
+                            <select x-model="crs.dept_name">
+                                <template x-for="dpt in depts">
+                                    <option 
+                                        :selected="crs.dept_name === dpt.dept_name"
+                                        x-text="dpt.dept_name"
+                                    ></option>
+                                </template>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Credits : </th>
+                        <td>
+                            <input type="text" x-model="crs.credits" size="3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" @click="Save(crs)"
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <pre x-text="JSON.stringify({crs}, null, 4)"></pre>
         </div>
     </div>
 </body>

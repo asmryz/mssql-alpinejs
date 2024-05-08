@@ -22,9 +22,29 @@ router.get('/api/department/:dept_name', (req, res) => {
             const result = await db.request()
                 .input('deptName', sql.VarChar, req.params.dept_name)
                 .query(`SELECT * FROM department WHERE dept_name = @deptName;`)
+                console.log(result.recordset)
             res.status(200).json(result.recordset)
         });
     } catch (err) { res.status(500).send(err.message) }
+})
+
+router.get('/api/courses/:id', (req, res) => {
+    try {
+        connection.then(async db => {
+            const result = await db.request()
+                .input('Id', sql.VarChar, req.params.id)
+                .query(
+                    `SELECT * FROM course WHERE course_id = @Id; 
+                    SELECT DISTINCT(dept_name) FROM department`
+                )
+                console.log(result.recordsets)
+            res.status(200).json(result.recordsets)
+        });
+    } catch (err) { res.status(500).send(err.message) }
+})
+
+router.post('/api/courses/save', (req, res) => {
+    console.log(req.body)
 })
 
 router.get('/col', (req, res) => {
